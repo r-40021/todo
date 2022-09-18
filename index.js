@@ -11,12 +11,39 @@ function add(taskName) {
 }
 
 /**
+ * タスクと完了したかどうかが含まれるオブジェクトを受け取り、完了したかを返す
+ * @param {object} taskAndIsDonePair
+ * @return {boolean} 完了したかどうか
+ */
+function isDone(taskAndIsDonePair) {
+  return taskAndIsDonePair.isDone;
+}
+
+/**
+ * タスクとと完了したかどうかが含まれるオブジェクトを受け取り、完了していないかを返す
+ * @param {object} taskAndIsDonePair
+ * @return {boolean} 完了していないかどうか
+ */
+function isNotDone(taskAndIsDonePair) {
+  return !isDone(taskAndIsDonePair);
+}
+
+/**
+ * 指定した名前のタスクの添字を返す
+ * @param {string} taskName
+ * @return {number} 添字
+ */
+function returnIndex(taskName) {
+  return tasks.findIndex(task => task.name === taskName);
+}
+
+/**
  * タスクの一覧の配列を取得する
  * @return {array}
  */
 function list() {
   return tasks
-    .filter(tasks => !tasks.isDone)
+    .filter(isNotDone)
     .map(task => task.name);
 }
 
@@ -25,7 +52,7 @@ function list() {
  * @param {string} taskName
  */
 function done(taskName) {
-  const indexFound = tasks.findIndex(taks => taks.name === taskName);
+  const indexFound = returnIndex(taskName);
   if (indexFound !== -1) {
     tasks[indexFound].isDone = true;
   }
@@ -37,7 +64,7 @@ function done(taskName) {
  */
 function donelist() {
   return tasks
-    .filter(tasks => tasks.isDone)
+    .filter(isDone)
     .map(task => task.name);
 }
 
@@ -46,7 +73,7 @@ function donelist() {
  * @param {string} taskName
  */
 function del(taskName) {
-  const indexFound = tasks.findIndex(task => task.name === taskName);
+  const indexFound = returnIndex(taskName);
   if (indexFound !== -1) {
     tasks.splice(indexFound, 1);
   }
