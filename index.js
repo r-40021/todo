@@ -1,0 +1,88 @@
+'use strict';
+// {name: タスクの名前, isDone: 完了しているどうかの真偽値}
+const tasks = [];
+
+/**
+ * タスクを追加する
+ * @param {string} taskName
+ */
+function add(taskName) {
+  tasks.push({name: taskName, isDone: false});
+}
+
+/**
+ * タスクと完了したかどうかが含まれるオブジェクトを受け取り、完了したかを返す
+ * @param {object} taskAndIsDonePair
+ * @return {boolean} 完了したかどうか
+ */
+function isDone(taskAndIsDonePair) {
+  return taskAndIsDonePair.isDone;
+}
+
+/**
+ * タスクとと完了したかどうかが含まれるオブジェクトを受け取り、完了していないかを返す
+ * @param {object} taskAndIsDonePair
+ * @return {boolean} 完了していないかどうか
+ */
+function isNotDone(taskAndIsDonePair) {
+  return !isDone(taskAndIsDonePair);
+}
+
+/**
+ * 指定した名前のタスクの添字を返す
+ * @param {string} taskName
+ * @return {number} 添字
+ */
+function returnIndex(taskName) {
+  return tasks.findIndex(task => task.name === taskName);
+}
+
+/**
+ * タスクの一覧の配列を取得する
+ * @return {array}
+ */
+function list() {
+  return tasks
+    .filter(isNotDone)
+    .map(task => task.name);
+}
+
+/**
+ * タスクを完了状態にする
+ * @param {string} taskName
+ */
+function done(taskName) {
+  const indexFound = returnIndex(taskName);
+  if (indexFound !== -1) {
+    tasks[indexFound].isDone = true;
+  }
+}
+
+/**
+ * 完了済みのタスクの一覧の配列を取得する
+ * @return {array}
+ */
+function donelist() {
+  return tasks
+    .filter(isDone)
+    .map(task => task.name);
+}
+
+/**
+ * 項目を削除する
+ * @param {string} taskName
+ */
+function del(taskName) {
+  const indexFound = returnIndex(taskName);
+  if (indexFound !== -1) {
+    tasks.splice(indexFound, 1);
+  }
+}
+
+module.exports = {
+  add,
+  list,
+  done,
+  donelist,
+  del
+};
