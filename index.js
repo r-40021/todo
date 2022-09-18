@@ -1,5 +1,4 @@
 'use strict';
-
 // {name: タスクの名前, isDone: 完了しているどうかの真偽値}
 const tasks = [];
 
